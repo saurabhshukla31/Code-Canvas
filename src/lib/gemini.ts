@@ -22,7 +22,7 @@ export async function generateResponse(prompt: string, selectedLang: string = 'P
     const promptTemplate = `
 As an expert algorithm teacher, explain the solution to this coding problem. Follow this EXACT format:
 
-1. BRIEF Problem Overview (2-3 sentences max)
+1. Brief Problem Overview (2-3 sentences max)
 
 2. Pseudocode (EXACTLY 5 steps, no more, no less):
    1) [First step - one clear, concise line]
@@ -54,6 +54,7 @@ IMPORTANT:
 - NO substeps or nested steps
 - Keep steps high-level and algorithmic
 - Use clear, concise language
+- After the pseudocode, each text should be beautifully presented
 `;
 
     const result = await chat.sendMessage(promptTemplate);
