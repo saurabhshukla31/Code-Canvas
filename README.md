@@ -20,8 +20,8 @@ AI-powered coding assistant that helps generate and explain code solutions using
 
 ### 1️⃣ Clone the Repository  
 ```sh
-git clone https://github.com/saurabhshukla31/CodeCanvas.git  
-cd CodeCanvas  
+git clone https://github.com/saurabhshukla31/Code-Canvas.git 
+cd Code-Canvas  
 ```  
 
 ### 2️⃣ Install Dependencies  
