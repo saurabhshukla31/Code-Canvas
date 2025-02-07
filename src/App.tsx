@@ -19,7 +19,7 @@ const Header = React.memo(() => (
       </h1>
     </div>
     <a
-      href="https://github.com/saurabhshukla31/Code-Canvas"
+      href="https://github.com/saurabhshukla31/CodeCanvas"
       target="_blank"
       rel="noopener noreferrer"
       className="px-4 py-2 text-sm font-semibold rounded-lg 
@@ -87,7 +87,7 @@ export default function App() {
   return (
     <div className="h-screen bg-[#0A0A0B] text-zinc-100 flex flex-col">
       <Header />
-      <main className="flex-1 grid grid-cols-2 gap-4 p-4 overflow-hidden">
+      <main className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 p-4 overflow-hidden">
         {/* Chat Section */}
         <div className="border border-zinc-800/50 rounded-lg bg-zinc-900/20 overflow-hidden flex flex-col">
           <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4">
@@ -102,7 +102,7 @@ export default function App() {
           </div>
         </div>
         {/* Canvas Section */}
-        <div className="border border-zinc-800/50 rounded-lg p-4 bg-zinc-900/20">
+        <div className="hidden md:block border border-zinc-800/50 rounded-lg p-4 bg-zinc-900/20">
           <Canvas latestMessage={latestAssistantMessage} />
         </div>
       </main>
