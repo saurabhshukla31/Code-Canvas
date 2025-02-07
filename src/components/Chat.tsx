@@ -78,22 +78,23 @@ export function Chat({
       <div className="flex-1 overflow-y-auto px-4 lg:px-6 py-6 space-y-6 custom-scrollbar">
         {messages.length === 0 ? (
           <div className="text-center mt-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#4387f4]/10 mb-6">
-              <Bot className="w-8 h-8 text-blue-500" />
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#4387f4]/10 mb-4">
+              <Bot className="w-6 h-6 text-blue-500" />
             </div>
-            <h2 className="text-xl font-semibold mb-6 text-zinc-100">
+            <h2 className="text-lg font-semibold mb-4 text-zinc-100">
               Ready to help with your code
             </h2>
-            <p className="text-zinc-400 mb-8">Try one of these examples:</p>
-            <div className="space-y-3 max-w-lg mx-auto">
+            <p className="text-sm text-zinc-400 mb-6">Try one of these examples:</p>
+            <div className="space-y-2 max-w-lg mx-auto">
               {[
                 '✨ Explain the Two Sum problem',
                 '🔍 How to solve Valid Parentheses?',
+                '🚀 Implement Binary Search on a Sorted Array',
               ].map((suggestion) => (
                 <button
                   key={suggestion}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="w-full p-4 bg-zinc-800/30 rounded-xl hover:bg-zinc-800/50 border border-zinc-700/50 hover:border-zinc-600/50 transition-all duration-200 group text-zinc-300 hover:text-zinc-100"
+                  className="w-full p-3 bg-zinc-800/30 rounded-lg hover:bg-zinc-800/50 border border-zinc-700/50 hover:border-zinc-600/50 transition-all duration-200 group text-sm text-zinc-300 hover:text-zinc-100"
                 >
                   <span className="group-hover:translate-x-1 inline-block transition-transform duration-200">
                     {suggestion}
@@ -213,6 +214,7 @@ export function Chat({
           background: transparent;
         }
       `}</style>
+
       <div className="border-t border-zinc-800/50 px-4 lg:px-6 py-4 bg-[#1a1a1c]">
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3">
