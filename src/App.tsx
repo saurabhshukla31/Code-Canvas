@@ -19,7 +19,7 @@ const Header = React.memo(() => (
       </h1>
     </div>
     <a
-      href="https://github.com/saurabhshukla31/CodeCanvas"
+      href="https://github.com/saurabhshukla31/Code-Canvas"
       target="_blank"
       rel="noopener noreferrer"
       className="px-4 py-2 text-sm font-semibold rounded-lg 
