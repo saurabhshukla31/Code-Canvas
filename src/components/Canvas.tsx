@@ -16,6 +16,8 @@ export function Canvas({ latestMessage }: CanvasProps) {
   const handleMount = (editor: Editor) => {
     editorRef.current = editor;
     setIsEditorReady(true);
+
+    editor.setCurrentTool('laser');
   };
 
   const handleFullscreen = () => {
