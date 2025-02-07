@@ -14,12 +14,17 @@ const Header = React.memo(() => (
       <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-white/20 shadow-sm">
         <Bot className="w-6 h-6 text-blue-400 drop-shadow-sm" />
       </div>
-      <h1 className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
+      {/* Make the 'CodeCanvas' text clickable without opening a new tab */}
+      <a 
+        href="https://ai-code-canvas.vercel.app/" 
+        rel="noopener noreferrer" 
+        className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400"
+      >
         CodeCanvas
-      </h1>
+      </a>
     </div>
     <a
-      href="https://github.com/saurabhshukla31/Code-Canvas"
+      href="https://github.com/saurabhshukla31/CodeCanvas"
       target="_blank"
       rel="noopener noreferrer"
       className="px-4 py-2 text-sm font-semibold rounded-lg 
@@ -36,6 +41,7 @@ const Header = React.memo(() => (
     </a>
   </header>
 ));
+
 
 Header.displayName = 'Header';
 
@@ -101,7 +107,7 @@ export default function App() {
             />
           </div>
         </div>
-        {/* Canvas Section */}
+        {/* Canvas Section - Hidden on Mobile */}
         <div className="hidden md:block border border-zinc-800/50 rounded-lg p-4 bg-zinc-900/20">
           <Canvas latestMessage={latestAssistantMessage} />
         </div>
