@@ -84,7 +84,7 @@ export function Chat({
             <h2 className="text-xl font-semibold mb-6 text-zinc-100">
               Ready to help with your code
             </h2>
-            <p className="text-zinc-400 mb-8"></p>
+            <p className="text-zinc-400 mb-8">Try one of these examples:</p>
             <div className="space-y-3 max-w-lg mx-auto">
               {[
                 '✨ Explain the Two Sum problem',
