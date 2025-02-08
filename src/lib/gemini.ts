@@ -8,18 +8,20 @@ if (!apiKey) {
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
+let chatHistory: { role: string; parts: string }[] = [];
+
 export async function generateResponse(prompt: string, selectedLang: string = 'Python'): Promise<string> {
   try {
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const isMobile = window.innerWidth <= 768;
+
     const chat = model.startChat({
-      history: [],
+      history: isMobile ? chatHistory : [],
       generationConfig: {
         maxOutputTokens: 2048,
         temperature: 0.7,
       },
     });
-
-    const isMobile = window.innerWidth <= 768;
 
     const promptTemplate = isMobile
       ? `Behave like a normal chatbot and give well-structured answers.\n\nUser: ${prompt}`
@@ -60,7 +62,14 @@ IMPORTANT:
 `;
 
     const result = await chat.sendMessage(promptTemplate);
-    return result.response.text();
+    const responseText = result.response.text();
+
+    if (isMobile) {
+      chatHistory.push({ role: "user", parts: prompt });
+      chatHistory.push({ role: "model", parts: responseText });
+    }
+
+    return responseText;
   } catch (error) {
     console.error("❌ Error generating response:", error);
     return "I apologize, but I encountered an error while processing your request. Please try again.";
