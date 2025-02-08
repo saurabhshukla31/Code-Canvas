@@ -261,7 +261,7 @@ export function Chat({
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask a coding question..."
+              placeholder="Ask a question..."
               className="flex-1 h-8 sm:h-9 text-xs sm:text-sm text-zinc-100 rounded-md sm:rounded-xl px-2.5 sm:px-4 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011]"
               disabled={isLoading}
             />
