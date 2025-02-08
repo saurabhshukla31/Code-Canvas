@@ -44,7 +44,7 @@ export function Chat({
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-[#101011]">
       {/* Header */}
       <div className="px-3 sm:px-6 py-2 sm:py-3 border-b border-zinc-800/50 flex justify-between items-center bg-[#171718] sticky top-0 z-10">
         <div>
@@ -133,7 +133,6 @@ export function Chat({
                                   borderRadius: '4px',
                                   border: '1px solid #3f3f3f',
                                   marginBottom: '0.5rem',
-                                  fontSize: '0.7rem',
                                   '@media (min-width: 640px)': {
                                     padding: '0.75rem',
                                     fontSize: '0.85rem',
