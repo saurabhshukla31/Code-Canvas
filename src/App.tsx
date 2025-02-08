@@ -21,7 +21,7 @@ const Header = React.memo(() => (
       <a 
         href="https://ai-code-canvas.vercel.app/" 
         rel="noopener noreferrer" 
-        className="text-base md:text-lg font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400"
+        className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-[#FFFFFF]"
       >
         CodeCanvas
       </a>
