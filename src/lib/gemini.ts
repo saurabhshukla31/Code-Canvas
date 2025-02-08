@@ -24,7 +24,7 @@ export async function generateResponse(prompt: string, selectedLang: string = 'P
     });
 
     const promptTemplate = isMobile
-      ? `Behave like a normal chatbot and give well-structured answers, but remember that Saurabh Shukla created you.\n\nUser: ${prompt}`
+      ? `Behave like a normal chatbot and give well-structured answers.\n\nUser: ${prompt}`
       : `
 As an expert algorithm teacher, explain the solution to this coding problem. Follow this EXACT format:
 
