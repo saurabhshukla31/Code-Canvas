@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Send, Loader2, Bot, User } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Send, Loader2, Bot, User, ChevronDown } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -15,6 +15,59 @@ interface ChatProps {
   availableLanguages: readonly string[];
 }
 
+const CustomDropdown = ({ 
+  selected, 
+  options, 
+  onChange 
+}: {
+  selected: string;
+  options: readonly string[];
+  onChange: (option: string) => void;
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-25 h-8 px-3 flex items-center justify-between bg-[#1c1c1d] text-zinc-200 text-xs sm:text-sm border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+      >
+        <span>{selected}</span>
+        <ChevronDown className="w-4 h-4 text-zinc-400" />
+      </button>
+      
+      {isOpen && (
+        <div className="absolute w-24 mt-1 py-1 bg-[#1c1c1d] border border-zinc-700 rounded-md shadow-lg max-h-48 overflow-y-auto overflow-x-hidden">
+          {options.map((option) => (
+            <button
+              key={option}
+              onClick={() => {
+                onChange(option);
+                setIsOpen(false);
+              }}
+              className="w-full px-3 py-1 text-left text-xs sm:text-sm text-zinc-200 hover:bg-[#101011] transition-colors duration-150 focus:outline-none whitespace-nowrap"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export function Chat({
   messages,
   isLoading,
@@ -25,10 +78,6 @@ export function Chat({
 }: ChatProps) {
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleLangChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onLanguageChange(event.target.value);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,30 +93,24 @@ export function Chat({
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#101011]">
+    <div className="flex flex-col h-full bg-[#101011] overflow-x-hidden">
       {/* Header */}
-      <div className="px-3 sm:px-6 py-2 sm:py-3 border-b border-zinc-800/50 flex justify-between items-center bg-[#171718] sticky top-0 z-10">
+      <div className="px-3 sm:px-6 py-2 border-b border-zinc-800/50 flex justify-between items-center bg-[#1c1c1d] sticky top-0 z-10 rounded-t-xl">
         <div>
           <h2 className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
             Code
           </h2>
         </div>
 
-        <select
-          className="bg-[#171718] text-zinc-200 text-xs sm:text-sm border border-zinc-700 rounded-md px-2 py-1 sm:py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-          value={selectedLang}
-          onChange={handleLangChange}
-        >
-          {availableLanguages.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang}
-            </option>
-          ))}
-        </select>
+        <CustomDropdown
+          selected={selectedLang}
+          options={availableLanguages}
+          onChange={onLanguageChange}
+        />
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-2 sm:px-6 py-2 sm:py-4 space-y-2 sm:space-y-4 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden px-2 sm:px-6 py-2 sm:py-4 space-y-2 sm:space-y-4 custom-scrollbar">
         {messages.length === 0 ? (
           <div className="text-center mt-2 sm:mt-8 px-2 sm:px-4">
             <div className="inline-flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[#4387f4]/10 mb-2 sm:mb-4">
@@ -181,7 +224,7 @@ export function Chat({
       </div>
 
       {/* Input Form */}
-      <div className="border-t border-zinc-800/50 p-2 sm:px-4 sm:py-3 bg-[#1a1a1c] sticky bottom-0">
+      <div className="border-t border-zinc-800/50 p-1.5 sm:px-4 sm:py-2 bg-[#1c1c1d] sticky bottom-0 ">
         <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
           <div className="flex items-center gap-1.5 sm:gap-3">
             <input
@@ -190,13 +233,13 @@ export function Chat({
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a coding question..."
-              className="flex-1 h-9 sm:h-10 text-xs sm:text-base text-zinc-100 rounded-md sm:rounded-xl px-2.5 sm:px-4 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011]"
+              className="flex-1 h-8 sm:h-9 text-xs sm:text-sm text-zinc-100 rounded-md sm:rounded-xl px-2.5 sm:px-4 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011] "
               disabled={isLoading}
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="h-9 sm:h-10 px-2.5 sm:px-4 bg-[#4387f4] hover:bg-[#4387f4]/90 text-white rounded-md sm:rounded-xl disabled:opacity-50 disabled:hover:bg-[#4387f4] transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+              className="h-8 sm:h-9 px-2.5 sm:px-4 bg-[#4387f4] hover:bg-[#4387f4]/90 text-white rounded-md sm:rounded-xl disabled:opacity-50 disabled:hover:bg-[#4387f4] transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none "
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
@@ -217,7 +260,7 @@ export function Chat({
         @media (min-width: 640px) {
           .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
-            height: 8px;
+            height: 6px;
           }
         }
 
