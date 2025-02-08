@@ -18,14 +18,15 @@ const Header = React.memo(() => (
       <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-white/20 shadow-sm">
         <Bot className="w-5 h-5 text-blue-400 drop-shadow-sm" />
       </div>
-      <a 
-        href="https://ai-code-canvas.vercel.app/" 
-        rel="noopener noreferrer" 
+      <a
+        href="https://ai-code-canvas.vercel.app/"
+        rel="noopener noreferrer"
         className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-[#FFFFFF]"
       >
         CodeCanvas
       </a>
     </div>
+
     <a
       href="https://github.com/saurabhshukla31/Code-Canvas"
       target="_blank"
@@ -39,11 +40,12 @@ const Header = React.memo(() => (
       backdrop-blur-sm 
       shadow-md hover:shadow-lg"
     >
-      <Github className="w-3.5 h-3.5 md:w-4 md:h-4" />
-      Star on GitHub
+      <Github className="w-5 h-5" />
+      <span className="hidden sm:block">Star on GitHub</span>
     </a>
   </header>
 ));
+
 
 Header.displayName = 'Header';
 
