@@ -17,109 +17,90 @@ export function Canvas({ latestMessage }: CanvasProps) {
     editorRef.current = editor;
     setIsEditorReady(true);
 
-    editor.setCurrentTool('laser');
-  };
+    // Enable the grid on mount
+    editor.updateInstanceState({ isGridMode: true });
 
-  const handleFullscreen = () => {
-    if (!canvasRef.current) return;
-
-    if (!document.fullscreenElement) {
-      if (canvasRef.current.requestFullscreen) {
-        canvasRef.current.requestFullscreen();
-      } else if (canvasRef.current.mozRequestFullScreen) {
-        canvasRef.current.mozRequestFullScreen();
-      } else if (canvasRef.current.webkitRequestFullscreen) {
-        canvasRef.current.webkitRequestFullscreen();
-      } else if (canvasRef.current.msRequestFullscreen) {
-        canvasRef.current.msRequestFullscreen();
-      }
-    }
+    // Default tool is 'select'
+    editor.setCurrentTool('select');
   };
 
   useEffect(() => {
     if (!latestMessage || !isEditorReady || !editorRef.current) return;
-
+    
     const visualizeContent = async () => {
       const editor = editorRef.current;
       if (!editor) return;
+      
+      editor.selectAll();
+      editor.deleteShapes(editor.getSelectedShapeIds());
 
-      try {
-        editor.selectAll();
-        editor.deleteShapes(editor.getSelectedShapeIds());
+      const lines = latestMessage.split('\n');
+      const steps: string[] = [];
+      let isPseudocodeSection = false;
 
-        const lines = latestMessage.split('\n');
-        const steps: string[] = [];
-        let isPseudocodeSection = false;
-
-        for (const line of lines) {
-          const trimmedLine = line.trim();
-          
-          if (trimmedLine.toLowerCase().includes('pseudocode') || 
-              trimmedLine.toLowerCase().includes('algorithm steps')) {
-            isPseudocodeSection = true;
-            continue;
-          }
-          
-          if (isPseudocodeSection && /^\d+[.)\s]/.test(trimmedLine)) {
-            const step = trimmedLine.replace(/^\d+[.)\s]+/, '').trim();
-            if (step) steps.push(step);
-          }
+      for (const line of lines) {
+        const trimmedLine = line.trim();
+        if (trimmedLine.toLowerCase().includes('pseudocode') || 
+            trimmedLine.toLowerCase().includes('algorithm steps')) {
+          isPseudocodeSection = true;
+          continue;
         }
-
-        const validSteps = steps.slice(0, 5);
-        if (validSteps.length === 0) {
-          console.warn('No valid steps found in the message');
-          return;
+        if (isPseudocodeSection && /^\d+[.)\s]/.test(trimmedLine)) {
+          const step = trimmedLine.replace(/^\d+[.)\s]+/, '').trim();
+          if (step) steps.push(step);
         }
+      }
 
+      const validSteps = steps.slice(0, 5);
+      if (validSteps.length === 0) return;
+      
+      editor.createShape({
+        id: createShapeId(),
+        type: 'text',
+        x: 10,
+        y: 50,
+        props: {
+          text: '🔍 Algorithm Steps',
+          size: 'm',
+          font: 'draw',
+          textAlign: 'start',
+          color: 'blue',
+        },
+      });
+
+      validSteps.forEach((step, index) => {
         editor.createShape({
           id: createShapeId(),
           type: 'text',
-          x: 10,
-          y: 50,
+          x: 20,
+          y: 90 + (index * 40),
           props: {
-            text: '🔍 Algorithm Steps',
-            size: 'm',
+            text: `${index + 1}. ${step}`,
+            size: 's',
             font: 'draw',
             textAlign: 'start',
-            color: 'blue',
+            color: 'black',
           },
         });
+      });
 
-        validSteps.forEach((step, index) => {
-          editor.createShape({
-            id: createShapeId(),
-            type: 'text',
-            x: 20,
-            y: 90 + (index * 40),
-            props: {
-              text: `${index + 1}. ${step}`,
-              size: 's',
-              font: 'draw',
-              textAlign: 'start',
-              color: 'black',
-            },
-          });
-        });
+      setTimeout(() => {
+        if (editor) {
+          editor.zoomToFit();
+          editor.setCamera({ x: 0, y: 0, z: 1 });
 
-        setTimeout(() => {
-          if (editor) {
-            editor.zoomToFit();
-            editor.setCamera({ x: 0, y: 0, z: 1 });
-          }
-        }, 100);
-
-      } catch (error) {
-        console.error('Error creating text:', error);
-      }
+          // Switch to laser tool after message appears
+          editor.setCurrentTool('laser');
+        }
+      }, 100);
     };
-
+    
     const timeoutId = setTimeout(visualizeContent, 300);
     return () => clearTimeout(timeoutId);
   }, [latestMessage, isEditorReady]);
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col bg-[#171718] text-white">
       <div className="px-3 sm:px-6 py-2 sm:py-3 border-b border-zinc-800/50 flex justify-between items-center bg-[#171718] sticky top-0 z-10">
         <div>
           <h2 className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
@@ -127,18 +108,15 @@ export function Canvas({ latestMessage }: CanvasProps) {
           </h2>
         </div>
         <button
-          onClick={handleFullscreen}
+          onClick={() => canvasRef.current?.requestFullscreen()}
           className="p-1.5 hover:bg-zinc-800/50 rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/20"
           title="Go Fullscreen"
         >
           <Maximize className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-200" />
         </button>
       </div>
-      <div ref={canvasRef} className="flex-1 tldraw__editor">
-        <Tldraw 
-          onMount={handleMount} 
-          inferDarkMode
-        />
+      <div ref={canvasRef} className="flex-1 tldraw__editor border border-zinc-700 rounded-lg shadow-md">
+        <Tldraw onMount={handleMount} inferDarkMode />
       </div>
     </div>
   );
