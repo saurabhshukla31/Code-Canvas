@@ -16,31 +16,27 @@ export function Canvas({ latestMessage }: CanvasProps) {
   const handleMount = (editor: Editor) => {
     editorRef.current = editor;
     setIsEditorReady(true);
-
     // Enable the grid on mount
     editor.updateInstanceState({ isGridMode: true });
-
     // Default tool is 'select'
     editor.setCurrentTool('select');
   };
 
   useEffect(() => {
     if (!latestMessage || !isEditorReady || !editorRef.current) return;
-    
+   
     const visualizeContent = async () => {
       const editor = editorRef.current;
       if (!editor) return;
-      
+     
       editor.selectAll();
       editor.deleteShapes(editor.getSelectedShapeIds());
-
       const lines = latestMessage.split('\n');
       const steps: string[] = [];
       let isPseudocodeSection = false;
-
       for (const line of lines) {
         const trimmedLine = line.trim();
-        if (trimmedLine.toLowerCase().includes('pseudocode') || 
+        if (trimmedLine.toLowerCase().includes('pseudocode') ||
             trimmedLine.toLowerCase().includes('algorithm steps')) {
           isPseudocodeSection = true;
           continue;
@@ -50,10 +46,9 @@ export function Canvas({ latestMessage }: CanvasProps) {
           if (step) steps.push(step);
         }
       }
-
       const validSteps = steps.slice(0, 5);
       if (validSteps.length === 0) return;
-      
+     
       editor.createShape({
         id: createShapeId(),
         type: 'text',
@@ -67,7 +62,6 @@ export function Canvas({ latestMessage }: CanvasProps) {
           color: 'blue',
         },
       });
-
       validSteps.forEach((step, index) => {
         editor.createShape({
           id: createShapeId(),
@@ -83,25 +77,23 @@ export function Canvas({ latestMessage }: CanvasProps) {
           },
         });
       });
-
       setTimeout(() => {
         if (editor) {
           editor.zoomToFit();
           editor.setCamera({ x: 0, y: 0, z: 1 });
-
           // Switch to laser tool after message appears
           editor.setCurrentTool('laser');
         }
       }, 100);
     };
-    
+   
     const timeoutId = setTimeout(visualizeContent, 300);
     return () => clearTimeout(timeoutId);
   }, [latestMessage, isEditorReady]);
 
   return (
-    <div className="h-full flex flex-col bg-[#171718] text-white">
-      <div className="px-3 sm:px-6 py-2 sm:py-3 border-b border-zinc-800/50 flex justify-between items-center bg-[#171718] sticky top-0 z-10">
+    <div className="h-full flex flex-col bg-[#101011]">
+      <div className="px-3 sm:px-6 py-2 border-b border-zinc-800/50 flex justify-between items-center bg-[#1c1c1d] sticky top-0 z-10 rounded-t-xl">
         <div>
           <h2 className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
             Canvas
