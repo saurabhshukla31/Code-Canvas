@@ -22,7 +22,7 @@ export async function generateResponse(prompt: string, selectedLang: string = 'P
     const isMobile = window.innerWidth <= 768;
 
     const promptTemplate = isMobile
-      ? prompt 
+      ? `Behave like a normal chatbot and give well-structured answers.\n\nUser: ${prompt}`
       : `
 As an expert algorithm teacher, explain the solution to this coding problem. Follow this EXACT format:
 
@@ -37,8 +37,6 @@ As an expert algorithm teacher, explain the solution to this coding problem. Fol
 
 3. Implementation (in ${selectedLang}):
    - Clean, optimized code
-   - Important comments only
-   - Follow best practices
 
 4. Complexity:
    - Time: O(?) with brief explanation
