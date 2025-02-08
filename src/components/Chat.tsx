@@ -252,33 +252,33 @@ export function Chat({
         )}
       </div>
 
-      {/* Input Form */}
-      <div className="border-t border-zinc-800/50 p-1.5 sm:px-4 sm:py-2 bg-[#1c1c1d] sticky bottom-0">
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-1.5 sm:gap-3">
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask a question..."
-              className="flex-1 h-8 sm:h-9 text-xs sm:text-sm text-zinc-100 rounded-md sm:rounded-xl px-2.5 sm:px-4 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011]"
-              disabled={isLoading}
-            />
-            <button
-              type="submit"
-              disabled={isLoading || !input.trim()}
-              className="h-8 sm:h-9 px-2.5 sm:px-4 bg-[#4387f4] hover:bg-[#4387f4]/80 text-white rounded-lg disabled:bg-[#4387f4]/30 transition-all duration-200"
-            >
-              {isLoading ? (
-                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-              ) : (
-                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-              )}
-            </button>
-          </div>
-        </form>
-      </div>
+{/* Input Form */}
+<div className="border-t border-zinc-800/50 p-2 sm:px-4 sm:py-2.5 bg-[#1c1c1d] sticky bottom-0">
+  <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+    <div className="flex items-center gap-2 sm:gap-3">
+      <input
+        ref={inputRef}
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Ask a question..."
+        className="flex-1 h-9 sm:h-10 text-sm text-zinc-100 rounded-lg sm:rounded-xl px-3 sm:px-4 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011]"
+        disabled={isLoading}
+      />
+      <button
+        type="submit"
+        disabled={isLoading || !input.trim()}
+        className="h-9 sm:h-10 px-3 sm:px-4 bg-[#4387f4] hover:bg-[#4387f4]/80 text-white rounded-lg sm:rounded-xl disabled:bg-[#4387f4]/30 transition-all duration-200"
+      >
+        {isLoading ? (
+          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+        ) : (
+          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+        )}
+      </button>
+    </div>
+  </form>
+</div>
 
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
