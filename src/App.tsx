@@ -8,7 +8,6 @@ import { generateResponse } from './lib/gemini';
 const AVAILABLE_LANGUAGES = ['Python', 'C', 'C++', 'Java', 'JavaScript'] as const;
 type ProgrammingLanguage = typeof AVAILABLE_LANGUAGES[number];
 
-// Prevent mobile zoom issues with meta viewport
 const MetaViewport = () => (
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 );
@@ -101,7 +100,7 @@ export default function App() {
         <main className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 p-2 md:p-4 overflow-hidden">
           {/* Chat Section */}
           <div className="border border-zinc-800/50 rounded-lg bg-zinc-900/20 overflow-hidden flex flex-col">
-            <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-3 md:p-4">
+            <div ref={chatContainerRef} className="flex-1 overflow-y-auto">
               <Chat
                 messages={chatState.messages}
                 isLoading={chatState.isLoading}
@@ -113,7 +112,7 @@ export default function App() {
             </div>
           </div>
           {/* Canvas Section */}
-          <div className="hidden md:block border border-zinc-800/50 rounded-lg p-4 bg-zinc-900/20">
+          <div className="hidden md:block border border-zinc-800/50 rounded-lg bg-zinc-900/20 overflow-hidden">
             <Canvas latestMessage={latestAssistantMessage} />
           </div>
         </main>
