@@ -78,6 +78,22 @@ export function Chat({
 }: ChatProps) {
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const [localMessages, setLocalMessages] = useState<Message[]>([]);
+  
+  const isMobile = window.innerWidth <= 768;
+
+  useEffect(() => {
+    setLocalMessages(messages);
+  }, [messages]);
+
+  useEffect(() => {
+    if (isMobile && localMessages.length === 0) {
+      setLocalMessages([{
+        role: 'assistant',
+        content: "On mobile devices, the canvas is not accessible, and the coding assistant will appear as a normal chatbot, designed to give well-structured, helpful answers."
+      }]);
+    }
+  }, [isMobile]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,7 +127,7 @@ export function Chat({
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden px-2 sm:px-6 py-2 sm:py-4 space-y-2 sm:space-y-4 custom-scrollbar">
-        {messages.length === 0 ? (
+        {localMessages.length === 0 ? (
           <div className="text-center mt-2 sm:mt-8 px-2 sm:px-4">
             <div className="inline-flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[#4387f4]/10 mb-2 sm:mb-4">
               <Bot className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500" />
@@ -139,12 +155,10 @@ export function Chat({
             </div>
           </div>
         ) : (
-          messages.map((message, index) => (
+          localMessages.map((message, index) => (
             <div
               key={index}
-              className={`flex items-start gap-1.5 sm:gap-3 ${
-                message.role === 'user' ? 'justify-end' : 'justify-start'
-              }`}
+              className={`flex items-start gap-1.5 sm:gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.role === 'assistant' && (
                 <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-[#4387f4]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -224,7 +238,7 @@ export function Chat({
       </div>
 
       {/* Input Form */}
-      <div className="border-t border-zinc-800/50 p-1.5 sm:px-4 sm:py-2 bg-[#1c1c1d] sticky bottom-0 ">
+      <div className="border-t border-zinc-800/50 p-1.5 sm:px-4 sm:py-2 bg-[#1c1c1d] sticky bottom-0">
         <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
           <div className="flex items-center gap-1.5 sm:gap-3">
             <input
@@ -233,13 +247,13 @@ export function Chat({
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a coding question..."
-              className="flex-1 h-8 sm:h-9 text-xs sm:text-sm text-zinc-100 rounded-md sm:rounded-xl px-2.5 sm:px-4 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011] "
+              className="flex-1 h-8 sm:h-9 text-xs sm:text-sm text-zinc-100 rounded-md sm:rounded-xl px-2.5 sm:px-4 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011]"
               disabled={isLoading}
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="h-8 sm:h-9 px-2.5 sm:px-4 bg-[#4387f4] hover:bg-[#4387f4]/90 text-white rounded-md sm:rounded-xl disabled:opacity-50 disabled:hover:bg-[#4387f4] transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none "
+              className="h-8 sm:h-9 px-2.5 sm:px-4 bg-[#4387f4] hover:bg-[#4387f4]/80 text-white rounded-lg disabled:bg-[#4387f4]/30 transition-all duration-200"
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
@@ -250,7 +264,6 @@ export function Chat({
           </div>
         </form>
       </div>
-
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;
