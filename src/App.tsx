@@ -14,6 +14,7 @@ const MetaViewport = () => (
 
 const Header = React.memo(() => (
   <header className="h-14 sticky top-0 z-50 bg-white/10 backdrop-blur-xl border-b border-zinc-800/30 flex items-center justify-between px-4 md:px-6 shadow-lg">
+    
     <div className="flex items-center gap-3 md:gap-4">
       <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-white/20 shadow-sm">
         <Bot className="w-5 h-5 text-blue-400 drop-shadow-sm" />
@@ -31,31 +32,18 @@ const Header = React.memo(() => (
       href="https://github.com/saurabhshukla31/Code-Canvas"
       target="_blank"
       rel="noopener noreferrer"
-      className="px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-semibold rounded-lg 
-      bg-white/10 hover:bg-white/20 
-      border border-white/20 
-      text-white 
-      transition-all duration-300 
-      flex items-center gap-2 
-      backdrop-blur-sm 
-      shadow-md hover:shadow-lg"
+      className="flex items-center gap-2 text-white transition-all duration-300 
+      sm:px-4 sm:py-2 sm:bg-white/10 sm:hover:bg-white/20 sm:border sm:border-white/20 
+      sm:rounded-lg sm:shadow-md sm:hover:shadow-lg"
     >
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        viewBox="0 0 24 24" 
-        fill="currentColor" 
-        className="w-5 h-5"
-      >
-        <path 
-          fillRule="evenodd" 
-          d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.167 6.839 9.49.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.704-2.782.603-3.369-1.34-3.369-1.34-.455-1.157-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.089 2.91.832.091-.647.349-1.088.635-1.34-2.22-.253-4.555-1.11-4.555-4.946 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.272.098-2.65 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.801c.85.004 1.705.114 2.505.335 1.91-1.294 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.699 1.028 1.592 1.028 2.683 0 3.846-2.339 4.69-4.566 4.938.359.309.678.921.678 1.856 0 1.34-.012 2.418-.012 2.746 0 .268.18.578.688.481C19.135 20.163 22 16.417 22 12c0-5.523-4.477-10-10-10z" 
-          clipRule="evenodd"
-        />
-      </svg>
-      <span className="hidden sm:block">Star on GitHub</span>
+      {/* GitHub Icon (Always Visible) */}
+      <Github className="w-4 h-4 md:w-3.5 md:h-3.5" />
+      {/* "Star on GitHub" Text (Hidden on Mobile, Visible on Larger Screens) */}
+      <span className="hidden sm:block text-xs md:text-sm font-semibold">Star on GitHub</span>
     </a>
   </header>
 ));
+
 
 Header.displayName = 'Header';
 
