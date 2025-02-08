@@ -9,16 +9,15 @@ const AVAILABLE_LANGUAGES = ['Python', 'C', 'C++', 'Java', 'JavaScript'] as cons
 type ProgrammingLanguage = typeof AVAILABLE_LANGUAGES[number];
 
 const Header = React.memo(() => (
-  <header className="h-16 sticky top-0 z-50 bg-white/10 backdrop-blur-xl border-b border-zinc-800/30 flex items-center justify-between px-6 shadow-lg">
+  <header className="h-12 sticky top-0 z-50 bg-white/10 backdrop-blur-xl border-b border-zinc-800/30 flex items-center justify-between px-6 shadow-lg">
     <div className="flex items-center gap-4">
-      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-white/20 shadow-sm">
-        <Bot className="w-6 h-6 text-blue-400 drop-shadow-sm" />
+      <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-white/20 shadow-sm">
+        <Bot className="w-5 h-5 text-blue-400 drop-shadow-sm" />
       </div>
-      {/* Make the 'CodeCanvas' text clickable without opening a new tab */}
       <a 
         href="https://ai-code-canvas.vercel.app/" 
         rel="noopener noreferrer" 
-        className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400"
+        className="text-lg font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400"
       >
         CodeCanvas
       </a>
@@ -27,7 +26,7 @@ const Header = React.memo(() => (
       href="https://github.com/saurabhshukla31/Code-Canvas"
       target="_blank"
       rel="noopener noreferrer"
-      className="px-4 py-2 text-sm font-semibold rounded-lg 
+      className="px-3 py-1.5 text-xs font-semibold rounded-lg 
       bg-white/10 hover:bg-white/20 
       border border-white/20 
       text-white 
@@ -36,12 +35,11 @@ const Header = React.memo(() => (
       backdrop-blur-sm 
       shadow-md hover:shadow-lg"
     >
-      <Github className="w-4 h-4" />
+      <Github className="w-3.5 h-3.5" />
       Star on GitHub
     </a>
   </header>
 ));
-
 
 Header.displayName = 'Header';
 
@@ -107,7 +105,7 @@ export default function App() {
             />
           </div>
         </div>
-        {/* Canvas Section - Hidden on Mobile */}
+        {/* Canvas Section */}
         <div className="hidden md:block border border-zinc-800/50 rounded-lg p-4 bg-zinc-900/20">
           <Canvas latestMessage={latestAssistantMessage} />
         </div>
