@@ -78,22 +78,8 @@ export function Chat({
 }: ChatProps) {
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const [localMessages, setLocalMessages] = useState<Message[]>([]);
   
   const isMobile = window.innerWidth <= 768;
-
-  useEffect(() => {
-    setLocalMessages(messages);
-  }, [messages]);
-
-  useEffect(() => {
-    if (isMobile && localMessages.length === 0) {
-      setLocalMessages([{
-        role: 'assistant',
-        content: "On mobile devices, the canvas is not accessible, and the coding assistant will appear as a normal chatbot, designed to give well-structured, helpful answers."
-      }]);
-    }
-  }, [isMobile]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,20 +100,49 @@ export function Chat({
       <div className="px-3 sm:px-6 py-2 border-b border-zinc-800/50 flex justify-between items-center bg-[#1c1c1d] sticky top-0 z-10 rounded-t-xl">
         <div>
           <h2 className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-[#FFFFFF]">
-            Code
+            {isMobile ? 'Chat' : 'Code'}
           </h2>
         </div>
 
-        <CustomDropdown
-          selected={selectedLang}
-          options={availableLanguages}
-          onChange={onLanguageChange}
-        />
+        {!isMobile && (
+          <CustomDropdown
+            selected={selectedLang}
+            options={availableLanguages}
+            onChange={onLanguageChange}
+          />
+        )}
       </div>
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden px-2 sm:px-6 py-2 sm:py-4 space-y-2 sm:space-y-4 custom-scrollbar">
-        {localMessages.length === 0 ? (
+        {messages.length === 0 && isMobile ? (
+          <div className="text-center mt-2 sm:mt-8 px-2 sm:px-4">
+            <div className="inline-flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[#4387f4]/10 mb-2 sm:mb-4">
+              <Bot className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500" />
+            </div>
+            <h2 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-4 text-zinc-100">
+            I'm here to chat
+            </h2>
+            <p className="text-2xs sm:text-sm text-zinc-400 mb-3 sm:mb-6">Try one of these examples:</p>
+            <div className="space-y-1.5 sm:space-y-2 max-w-lg mx-auto px-2 sm:px-4">
+              {[
+                '🎉 Tell me a joke!',
+                '🕵️‍♂️ What’s the meaning of life?',
+                '🚀 Can you predict the future?',
+              ].map((suggestion) => (
+                <button
+                  key={suggestion}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  className="w-full p-2 sm:p-3 bg-zinc-800/30 rounded-md sm:rounded-lg hover:bg-zinc-800/50 border border-zinc-700/50 hover:border-zinc-600/50 transition-all duration-200 group text-2xs sm:text-sm text-zinc-300 hover:text-zinc-100"
+                >
+                  <span className="group-hover:translate-x-1 inline-block transition-transform duration-200">
+                    {suggestion}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : messages.length === 0 && !isMobile ? (
           <div className="text-center mt-2 sm:mt-8 px-2 sm:px-4">
             <div className="inline-flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[#4387f4]/10 mb-2 sm:mb-4">
               <Bot className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500" />
@@ -155,7 +170,7 @@ export function Chat({
             </div>
           </div>
         ) : (
-          localMessages.map((message, index) => (
+          messages.map((message, index) => (
             <div
               key={index}
               className={`flex items-start gap-1.5 sm:gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
@@ -264,41 +279,20 @@ export function Chat({
           </div>
         </form>
       </div>
+
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;
           height: 4px;
         }
 
-        @media (min-width: 640px) {
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-          }
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(0, 0, 0, 0.2);
-          border-radius: 8px;
-          margin: 0 2px;
-        }
-
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #4a4a4a;
-          border-radius: 8px;
-          border: 1px solid transparent;
-          background-clip: padding-box;
-          transition: background-color 0.2s;
+          background: #3f3f3f;
+          border-radius: 2px;
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #666;
-          border: 1px solid transparent;
-          background-clip: padding-box;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-corner {
-          background: transparent;
+          background: #6e6e6e;
         }
       `}</style>
     </div>
