@@ -19,7 +19,11 @@ export async function generateResponse(prompt: string, selectedLang: string = 'P
       },
     });
 
-    const promptTemplate = `
+    const isMobile = window.innerWidth <= 768;
+
+    const promptTemplate = isMobile
+      ? prompt 
+      : `
 As an expert algorithm teacher, explain the solution to this coding problem. Follow this EXACT format:
 
 1. Brief Problem Overview (2-3 sentences max)
@@ -54,7 +58,7 @@ IMPORTANT:
 - NO substeps or nested steps
 - Keep steps high-level and algorithmic
 - Use clear, concise language
-- After the pseudocode, each text should be beautifully presented
+- After pseudocode, each text should be beautifully presented
 `;
 
     const result = await chat.sendMessage(promptTemplate);
