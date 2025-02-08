@@ -95,7 +95,7 @@ export default function App() {
   return (
     <>
       <MetaViewport />
-      <div className="h-screen bg-[#0A0A0B] text-zinc-100 flex flex-col">
+      <div className="h-screen bg-[#000000] text-zinc-100 flex flex-col">
         <Header />
         <main className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 p-2 md:p-4 overflow-hidden">
           {/* Chat Section */}
