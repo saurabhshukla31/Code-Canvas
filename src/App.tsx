@@ -16,7 +16,7 @@ const Header = React.memo(() => (
   <header className="h-14 sticky top-0 z-50 bg-white/10 backdrop-blur-xl border-b border-zinc-800/30 flex items-center justify-between px-4 md:px-6 shadow-lg">
     
     <div className="flex items-center gap-3 md:gap-4">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Google_Gemini_Logo.svg" alt="Gemini Logo" className="w-9 h-9" />
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,50 50,95 5,50' fill='%2300A7E1'/%3E%3C/svg%3E" alt="Gemini Logo" className="w-9 h-9" />
       <a
         href="https://ai-code-canvas.vercel.app/"
         rel="noopener noreferrer"
