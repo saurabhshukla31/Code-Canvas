@@ -97,7 +97,7 @@ export function Chat({
       {/* Header */}
       <div className="px-3 sm:px-6 py-2 border-b border-zinc-800/50 flex justify-between items-center bg-[#1c1c1d] sticky top-0 z-10 rounded-t-xl">
         <div>
-          <h2 className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
+          <h2 className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-[#FFFFFF]">
             Code
           </h2>
         </div>
