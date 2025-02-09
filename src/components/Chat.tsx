@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Send, Loader2, Bot, User, ChevronDown } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import type { Message } from '../types';
-import CopyButton from './CopyButton';
+import React, { useState, useRef, useEffect } from "react";
+import { Send, Loader2, Bot, User, ChevronDown } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import type { Message } from "../types";
+import CopyButton from "./CopyButton";
 
 interface ChatProps {
   messages: Message[];
@@ -15,10 +15,10 @@ interface ChatProps {
   availableLanguages: readonly string[];
 }
 
-const CustomDropdown = ({ 
-  selected, 
-  options, 
-  onChange 
+const CustomDropdown = ({
+  selected,
+  options,
+  onChange,
 }: {
   selected: string;
   options: readonly string[];
@@ -29,13 +29,16 @@ const CustomDropdown = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -47,7 +50,7 @@ const CustomDropdown = ({
         <span>{selected}</span>
         <ChevronDown className="w-4 h-4 text-zinc-400" />
       </button>
-      
+
       {isOpen && (
         <div className="absolute w-24 mt-1 py-1 bg-[#1c1c1d] border border-zinc-700 rounded-md shadow-lg max-h-48 overflow-y-auto overflow-x-hidden">
           {options.map((option) => (
@@ -76,16 +79,16 @@ export function Chat({
   onLanguageChange,
   availableLanguages,
 }: ChatProps) {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  
+
   const isMobile = window.innerWidth <= 768;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim() && !isLoading) {
       onSendMessage(input.trim());
-      setInput('');
+      setInput("");
     }
   };
 
@@ -100,7 +103,7 @@ export function Chat({
       <div className="px-3 sm:px-6 py-2 border-b border-zinc-800/50 flex justify-between items-center bg-[#1c1c1d] sticky top-0 z-10 rounded-t-xl">
         <div>
           <h2 className="text-base sm:text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-[#FFFFFF]">
-            {isMobile ? 'Chat' : 'Code'}
+            {isMobile ? "Chat" : "Code"}
           </h2>
         </div>
 
@@ -121,14 +124,16 @@ export function Chat({
               <Bot className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500" />
             </div>
             <h2 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-4 text-zinc-100">
-            I'm here to chat
+              I'm here to chat
             </h2>
-            <p className="text-2xs sm:text-sm text-zinc-400 mb-3 sm:mb-6">Try one of these examples:</p>
+            <p className="text-2xs sm:text-sm text-zinc-400 mb-3 sm:mb-6">
+              Try one of these examples:
+            </p>
             <div className="space-y-1.5 sm:space-y-2 max-w-lg mx-auto px-2 sm:px-4">
               {[
-                '🎉 Tell me a joke!',
-                '🕵️‍♂️ What’s the meaning of life?',
-                '🚀 Can you predict the future?',
+                "🎉 Tell me a joke!",
+                "🕵️‍♂️ What’s the meaning of life?",
+                "🚀 Can you predict the future?",
               ].map((suggestion) => (
                 <button
                   key={suggestion}
@@ -150,12 +155,14 @@ export function Chat({
             <h2 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-4 text-zinc-100">
               Ready to help with your code
             </h2>
-            <p className="text-2xs sm:text-sm text-zinc-400 mb-3 sm:mb-6">Try one of these examples:</p>
+            <p className="text-2xs sm:text-sm text-zinc-400 mb-3 sm:mb-6">
+              Try one of these examples:
+            </p>
             <div className="space-y-1.5 sm:space-y-2 max-w-lg mx-auto px-2 sm:px-4">
               {[
-                '✨ Explain the Two Sum problem',
-                '🔍 How to solve Valid Parentheses?',
-                '🚀 Implement Binary Search on a Sorted Array',
+                "✨ Explain the Two Sum problem",
+                "🔍 How to solve Valid Parentheses?",
+                "🚀 Implement Binary Search on a Sorted Array",
               ].map((suggestion) => (
                 <button
                   key={suggestion}
@@ -173,48 +180,52 @@ export function Chat({
           messages.map((message, index) => (
             <div
               key={index}
-              className={`flex items-start gap-1.5 sm:gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex items-start gap-1.5 sm:gap-3 ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
             >
-              {message.role === 'assistant' && (
+              {message.role === "assistant" && (
                 <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-[#4387f4]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Bot className="w-3 h-3 sm:w-5 sm:h-5 text-blue-500" />
                 </div>
               )}
               <div
                 className={`relative group max-w-[92%] sm:max-w-[70%] rounded-lg sm:rounded-2xl ${
-                  message.role === 'user'
-                    ? 'bg-[#4387f4] text-white shadow-md sm:shadow-xl border border-blue-700'
-                    : 'bg-zinc-800/50 text-zinc-100 border border-zinc-700/50'
+                  message.role === "user"
+                    ? "bg-[#4387f4] text-white shadow-md sm:shadow-xl border border-blue-700"
+                    : "bg-zinc-800/50 text-zinc-100 border border-zinc-700/50"
                 }`}
               >
                 <div className="p-2 sm:p-3 break-words space-y-2 sm:space-y-4 text-xs sm:text-sm">
                   <ReactMarkdown
                     components={{
                       code({ node, inline, className, children, ...props }) {
-                        const match = /language-(\w+)/.exec(className || '');
+                        const match = /language-(\w+)/.exec(className || "");
                         return !inline && match ? (
                           <div className="overflow-x-auto relative">
-                            <CopyButton code={String(children).replace(/\n$/, '')} />
+                            <CopyButton
+                              code={String(children).replace(/\n$/, "")}
+                            />
                             <SyntaxHighlighter
                               style={{
                                 ...oneDark,
                                 'pre[class*="language-"]': {
                                   ...oneDark['pre[class*="language-"]'],
-                                  background: 'transparent',
-                                  padding: '0.5rem',
-                                  borderRadius: '4px',
-                                  border: '1px solid #3f3f3f',
-                                  marginBottom: '0.5rem',
-                                  '@media (min-width: 640px)': {
-                                    padding: '0.75rem',
-                                    fontSize: '0.85rem',
-                                    borderRadius: '6px',
-                                    marginBottom: '0.75rem',
+                                  background: "transparent",
+                                  padding: "0.5rem",
+                                  borderRadius: "4px",
+                                  border: "1px solid #3f3f3f",
+                                  marginBottom: "0.5rem",
+                                  "@media (min-width: 640px)": {
+                                    padding: "0.75rem",
+                                    fontSize: "0.85rem",
+                                    borderRadius: "6px",
+                                    marginBottom: "0.75rem",
                                   },
                                 },
                                 'code[class*="language-"]': {
                                   ...oneDark['code[class*="language-"]'],
-                                  background: 'transparent',
+                                  background: "transparent",
                                 },
                               }}
                               language={match[1]}
@@ -223,11 +234,11 @@ export function Chat({
                               customStyle={{
                                 lineHeight: 1.4,
                                 marginTop: 0,
-                                background: 'transparent',
+                                background: "transparent",
                               }}
                               {...props}
                             >
-                              {String(children).replace(/\n$/, '')}
+                              {String(children).replace(/\n$/, "")}
                             </SyntaxHighlighter>
                           </div>
                         ) : (
@@ -242,7 +253,7 @@ export function Chat({
                   </ReactMarkdown>
                 </div>
               </div>
-              {message.role === 'user' && (
+              {message.role === "user" && (
                 <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-zinc-700/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <User className="w-3 h-3 sm:w-5 sm:h-5 text-zinc-400" />
                 </div>
@@ -252,33 +263,33 @@ export function Chat({
         )}
       </div>
 
-{/* Input Form */}
-<div className="border-t border-zinc-800/50 p-2 sm:px-4 sm:py-2.5 bg-[#1c1c1d] sticky bottom-0">
-  <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-    <div className="flex items-center gap-2 sm:gap-3">
-      <input
-        ref={inputRef}
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Ask a question..."
-        className="flex-1 h-9 sm:h-10 text-sm text-zinc-100 rounded-lg sm:rounded-xl px-3 sm:px-4 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011]"
-        disabled={isLoading}
-      />
-      <button
-        type="submit"
-        disabled={isLoading || !input.trim()}
-        className="h-9 sm:h-10 px-3 sm:px-4 bg-[#4387f4] hover:bg-[#4387f4]/80 text-white rounded-lg sm:rounded-xl disabled:bg-[#4387f4]/30 transition-all duration-200"
-      >
-        {isLoading ? (
-          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-        ) : (
-          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-        )}
-      </button>
-    </div>
-  </form>
-</div>
+      {/* Input Form */}
+      <div className="border-t border-zinc-800/50 p-3 sm:px-4 sm:py-3 bg-[#1c1c1d] sticky bottom-0">
+        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask a question..."
+              className="flex-1 h-11 sm:h-12 text-base sm:text-lg text-zinc-100 rounded-lg sm:rounded-xl px-4 sm:px-5 border border-zinc-700/50 focus:border-blue-500/50 focus:bg-zinc-800/70 placeholder-zinc-500 transition-all duration-200 focus:ring-2 focus:ring-blue-500/20 focus:outline-none bg-[#101011]"
+              disabled={isLoading}
+            />
+            <button
+              type="submit"
+              disabled={isLoading || !input.trim()}
+              className="w-11 h-11 sm:w-12 sm:h-12 bg-[#4387f4] hover:bg-[#4387f4]/80 text-white rounded-full disabled:bg-[#4387f4]/30 transition-all duration-200 flex items-center justify-center"
+            >
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 animate-spin" />
+              ) : (
+                <Send className="w-5 h-5 sm:w-6 sm:h-6" />
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
 
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
