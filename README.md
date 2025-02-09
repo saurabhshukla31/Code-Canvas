@@ -17,7 +17,7 @@
 - **Deployment** – Vercel  
 
 ### 📱 Screenshots  
-![Desktop view][image](https://github.com/user-attachments/assets/4c93d5df-7e30-44a7-9c36-b5b0137280f3)
+![Desktop view](https://github.com/user-attachments/assets/b3ae023f-9ba9-4488-9d08-b6da479e8313)
 
 ## 🏗️ **Installation & Setup**  
 
